@@ -1,0 +1,3 @@
+file '/home/hatch/workspace/hackathons/slay-hacks/coopsense/video/intro.mp4'
+file '/home/hatch/workspace/hackathons/slay-hacks/coopsense/video/body.mp4'
+file '/home/hatch/workspace/hackathons/slay-hacks/coopsense/video/outro.mp4'

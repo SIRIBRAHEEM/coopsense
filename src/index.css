@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CoopSense design system (shadcn-style patterns on Tailwind).
+   Farm-market look: warm cream ground, deep leaf green, terracotta.
+   Tokens live in tailwind.config.js. Components are defined once
+   with @apply and reused on every screen: card, button, input,
+   label, badge, alert, stat tile, tab, checkbox row.
+   Icons: Lucide. Type: Bitter (display) + Nunito Sans (body). */
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 { @apply font-display; }
+  button { font-family: inherit; }
+  :focus-visible { outline: 3px solid rgba(200, 90, 50, 0.45); outline-offset: 2px; }
+  input[type="checkbox"] { accent-color: #2F6B33; }
+}
+
+@layer components {
+  /* ---------- Shell ---------- */
+  .shell { @apply mx-auto w-full max-w-5xl px-4 sm:px-6 pb-16; }
+
+  .hero {
+    @apply relative overflow-hidden rounded-card bg-primary text-white shadow-card mt-4 sm:mt-6;
+    padding: 26px 24px 22px;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    right: -70px; top: -70px;
+    width: 240px; height: 240px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    right: 60px; bottom: -110px;
+    width: 200px; height: 200px;
+    border-radius: 9999px;
+    background: rgba(200, 90, 50, 0.28);
+  }
+  .hero-inner { @apply relative z-10 flex items-start gap-4; }
+  .brand-mark {
+    @apply w-14 h-14 rounded-2xl bg-white/15 border border-white/25 grid place-items-center flex-none;
+  }
+  .hero h1 { @apply text-[2rem] sm:text-4xl font-extrabold leading-none tracking-tight; }
+  .hero p { @apply mt-2 max-w-xl text-[0.98rem] leading-relaxed text-white/85; }
+  .hero-chips { @apply relative z-10 mt-4 flex flex-wrap gap-2; }
+  .hero-chip {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-white/10 border border-white/20
+      px-3 py-1 text-[0.8rem] font-semibold text-white;
+  }
+
+  /* ---------- Icon tab navigation (big touch targets) ---------- */
+  .tabbar {
+    @apply sticky top-3 z-20 mt-4 grid grid-cols-4 gap-2 rounded-card border border-border
+      bg-card/95 p-2 shadow-card;
+    backdrop-filter: blur(6px);
+  }
+  .tab {
+    @apply flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 rounded-control
+      border border-transparent px-2 py-2.5 sm:py-3 min-h-[56px] cursor-pointer
+      text-muted-foreground font-bold text-[0.8rem] sm:text-[0.95rem] leading-tight
+      transition-colors duration-150 hover:bg-muted hover:text-foreground;
+  }
+  .tab.active { @apply bg-primary text-white shadow-sm; }
+  .tab.active:hover { @apply bg-primary text-white; }
+  .tab svg { @apply flex-none; }
+
+  /* ---------- Cards and sections ---------- */
+  .card { @apply rounded-card border border-border bg-card shadow-card mt-4; padding: 22px; }
+  @media (min-width: 640px) { .card { padding: 26px 28px; } }
+  .card-head { @apply flex items-start gap-3.5 mb-1; }
+  .card-icon {
+    @apply w-12 h-12 rounded-2xl grid place-items-center flex-none;
+  }
+  .card-icon.green { @apply bg-primary-soft text-primary; }
+  .card-icon.clay { @apply bg-accent-soft text-accent; }
+  .card h2 { @apply text-[1.45rem] font-extrabold leading-tight text-foreground; }
+  .card h3 { @apply text-[1.05rem] font-bold mt-5 mb-1.5; }
+  .hint { @apply text-[0.9rem] leading-relaxed text-muted-foreground; }
+
+  /* ---------- Forms ---------- */
+  .field { @apply mt-4; }
+  .field > label, .field-label { @apply block font-bold text-[0.95rem] mb-1.5; }
+  .input {
+    @apply w-full max-w-sm h-12 rounded-control border border-border bg-white px-3.5
+      text-base font-semibold text-foreground placeholder:font-normal placeholder:text-muted-foreground
+      transition-shadow focus:border-primary focus:ring-2 focus:ring-primary/25 outline-none;
+  }
+  .input-wide { @apply max-w-none; }
+  .field .hint { @apply mt-1.5 block; }
+  .row { @apply flex flex-wrap items-end gap-3; }
+  .row .field { @apply mt-0; }
+
+  .pill {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-4 py-2.5
+      min-h-[44px] font-bold text-[0.92rem] text-foreground cursor-pointer
+      transition-colors duration-150 hover:border-primary hover:text-primary;
+  }
+  .pill.active { @apply bg-primary border-primary text-white; }
+  .pill.active:hover { @apply text-white; }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-control bg-accent px-6
+      min-h-[48px] font-extrabold text-base text-white cursor-pointer border-none
+      transition-colors duration-150 hover:bg-accent-hover disabled:bg-neutral-300 disabled:cursor-not-allowed;
+  }
+  .btn-green { @apply bg-primary hover:bg-primary-hover; }
+  .btn-quiet {
+    @apply bg-muted text-foreground border border-border hover:bg-border/60;
+  }
+
+  /* ---------- Stats, alerts, badges ---------- */
+  .stats { @apply grid gap-3 mt-5; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+  .stat { @apply rounded-control bg-primary-soft/70 border border-primary/15 px-4 py-3.5; }
+  .stat span { @apply block text-[0.8rem] font-semibold text-muted-foreground; }
+  .stat strong { @apply block mt-0.5 font-display text-[1.3rem] font-extrabold text-primary leading-tight; }
+  .stat.clay { @apply bg-accent-soft/80 border-accent/20; }
+  .stat.clay strong { @apply text-accent; }
+
+  .alert {
+    @apply flex gap-2.5 rounded-control border border-warn-border bg-warn px-4 py-3 mt-4
+      text-[0.92rem] leading-relaxed text-warn-text;
+  }
+  .alert svg { @apply flex-none mt-0.5; }
+  .alert-danger { @apply border-danger-border bg-danger-soft text-danger; }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.75rem] font-extrabold whitespace-nowrap;
+  }
+  .badge-due { @apply bg-warn text-warn-text border border-warn-border; }
+  .badge-overdue { @apply bg-danger-soft text-danger border border-danger-border; }
+  .badge-coming { @apply bg-muted text-muted-foreground border border-border; }
+  .badge-done { @apply bg-primary-soft text-primary border border-primary/20; }
+
+  .result-box { @apply rounded-control border border-primary/20 bg-primary-soft/60 px-5 py-4 mt-4; }
+  .result-box h3 { @apply mt-0; }
+  .result-box ul { @apply list-disc pl-5 mt-1 space-y-1 text-[0.95rem] leading-relaxed; }
+
+  /* ---------- Symptom checklist ---------- */
+  .symptoms { @apply grid gap-2 mt-4; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .check {
+    @apply flex items-center gap-3 rounded-control border border-border bg-white px-3.5 py-3
+      min-h-[52px] cursor-pointer font-semibold text-[0.95rem] leading-snug
+      transition-colors duration-150 hover:border-primary/50;
+  }
+  .check input { @apply w-6 h-6 flex-none cursor-pointer; }
+  .check.checked { @apply border-primary bg-primary-soft/70; }
+
+  /* ---------- Egg chart and log ---------- */
+  .chart {
+    @apply flex items-end gap-1.5 h-[170px] px-1 pt-3 mt-2 mb-4;
+    border-bottom: 2px solid #E7DEC9;
+  }
+  .bar-wrap { @apply flex-1 flex flex-col items-center justify-end min-w-0 h-full; }
+  .bar { @apply w-full max-w-[28px] rounded-t-lg bg-primary; }
+  .bar-label { @apply text-[0.68rem] text-muted-foreground mt-1.5; }
+  .bar-value { @apply text-[0.75rem] font-extrabold text-primary; }
+
+  .log { @apply w-full border-collapse mt-2 text-[0.95rem]; }
+  .log th { @apply text-left font-extrabold text-muted-foreground text-[0.8rem] uppercase tracking-wide py-2 px-2; }
+  .log td { @apply py-2.5 px-2 border-t border-border font-semibold; }
+  .link-btn {
+    @apply inline-flex items-center gap-1 bg-transparent border-none text-danger font-bold
+      text-[0.85rem] cursor-pointer p-1 rounded hover:underline;
+  }
+
+  /* ---------- Vaccine list ---------- */
+  .vaccine-list { @apply mt-4 space-y-2.5; }
+  .vaccine {
+    @apply flex items-start justify-between gap-3 rounded-control border border-border bg-white px-4 py-3.5;
+  }
+  .vaccine.due { @apply border-warn-border bg-warn/60; }
+  .vaccine.overdue { @apply border-danger-border bg-danger-soft/70; }
+  .vaccine.done { @apply opacity-60; }
+  .vaccine.done .v-name { @apply line-through; }
+  .vaccine .check { @apply border-none bg-transparent p-0 min-h-0 flex-1 hover:border-transparent; }
+  .vaccine .check.checked { @apply bg-transparent; }
+
+  footer { @apply text-center text-muted-foreground text-[0.85rem] leading-relaxed mt-8 px-4; }
+}

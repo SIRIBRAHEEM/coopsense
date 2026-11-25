@@ -72,7 +72,13 @@ npm run preview
 
 ## Tech used
 
-React and Vite, plain CSS, no extra libraries. All the logic is in
+React and Vite with Tailwind CSS. The interface is a small design
+system built with Tailwind in the shadcn style: cards, buttons,
+inputs, badges, alerts and stat tiles defined once in
+`src/index.css` and reused on every screen, with Lucide icons. The
+look is a farm-market theme (warm cream, deep leaf green and
+terracotta) with Bitter headings and Nunito Sans body text, both
+self-hosted so the app works offline. All the logic is in
 `src/lib` (feed maths, the symptom checker, the forecast and the
 vaccine schedule) and the four screens are in `src/components`.
 

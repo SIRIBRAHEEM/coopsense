@@ -1,0 +1,25 @@
+[
+ {
+  "owner": "SIRIBRAHEEM",
+  "repo": "coopsense",
+  "branch": "gh-pages",
+  "source_dir": "/home/hatch/workspace/hackathons/slay-hacks/coopsense/dist",
+  "commit_sha": "abf00c07ebabbdd6ad5932864d081aa9b88e47be",
+  "paths": [
+   "favicon.svg",
+   "assets/index-DQeQpwQG.js",
+   "assets/index-BXNOAEzl.css",
+   "index.html"
+  ]
+ },
+ {
+  "owner": "SIRIBRAHEEM",
+  "repo": "coopsense",
+  "branch": "gh-pages",
+  "source_dir": "/home/hatch/workspace/hackathons/slay-hacks/coopsense/dist",
+  "commit_sha": "c5bbdb64409a9c6baf8b175753a2a8246135ba18",
+  "paths": [
+   ".nojekyll"
+  ]
+ }
+]

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Syringe, Check } from "lucide-react";
 import { VACCINES, vaccineStatus } from "../lib/vaccines";
 
 const STORE_KEY = "coopsense-vaccines-v1";
@@ -16,6 +17,12 @@ function dayLabel(v) {
   if (v.dayFrom === v.dayTo) return `Day ${v.dayFrom}`;
   return `Day ${v.dayFrom} to ${v.dayTo}`;
 }
+
+const STATUS_BADGE = {
+  due: "badge badge-due",
+  overdue: "badge badge-overdue",
+  coming: "badge badge-coming",
+};
 
 export default function VaccineSchedule() {
   const [hatchDate, setHatchDate] = useState("");
@@ -50,20 +57,28 @@ export default function VaccineSchedule() {
   }
 
   return (
-    <div className="card">
-      <h2>Vaccination schedule</h2>
-      <p className="hint">
-        Enter the day your chicks hatched and CoopSense works out when each
-        vaccine is due. Tick each one off when it is done.
-      </p>
+    <section className="card">
+      <div className="card-head">
+        <div className="card-icon clay" aria-hidden="true">
+          <Syringe size={24} strokeWidth={2.2} />
+        </div>
+        <div>
+          <h2>Vaccination schedule</h2>
+          <p className="hint">
+            Enter the day your chicks hatched and CoopSense works out when
+            each vaccine is due. Tick each one off when it is done.
+          </p>
+        </div>
+      </div>
 
       <div className="field">
-        <label>Bird type</label>
+        <span className="field-label">Bird type</span>
         <div className="row">
           <button
             className={birdType === "layers" ? "pill active" : "pill"}
             onClick={() => setBirdType("layers")}
             type="button"
+            aria-pressed={birdType === "layers"}
           >
             Layers
           </button>
@@ -71,6 +86,7 @@ export default function VaccineSchedule() {
             className={birdType === "broilers" ? "pill active" : "pill"}
             onClick={() => setBirdType("broilers")}
             type="button"
+            aria-pressed={birdType === "broilers"}
           >
             Broilers
           </button>
@@ -78,8 +94,10 @@ export default function VaccineSchedule() {
       </div>
 
       <div className="field">
-        <label>Date the chicks hatched</label>
+        <label htmlFor="hatch-date">Date the chicks hatched</label>
         <input
+          id="hatch-date"
+          className="input"
           type="date"
           value={hatchDate}
           onChange={(e) => setHatchDate(e.target.value)}
@@ -87,12 +105,14 @@ export default function VaccineSchedule() {
       </div>
 
       {ageDays !== null && ageDays >= 0 && (
-        <p className="hint">
+        <p className="hint mt-3">
           Your birds are {ageDays} days old today.
         </p>
       )}
       {ageDays !== null && ageDays < 0 && (
-        <p className="hint">That date is in the future. Check it and try again.</p>
+        <p className="hint mt-3">
+          That date is in the future. Check it and try again.
+        </p>
       )}
 
       <div className="vaccine-list">
@@ -112,7 +132,9 @@ export default function VaccineSchedule() {
                   onChange={() => toggle(v.name)}
                 />
                 <span>
-                  <strong>{v.name}</strong> — {dayLabel(v)}
+                  <span className="v-name">
+                    <strong>{v.name}</strong> - {dayLabel(v)}
+                  </span>
                   {hatchDate && ageDays !== null && ageDays >= 0 && (
                     <> (due from {dueDate(v)})</>
                   )}
@@ -120,19 +142,30 @@ export default function VaccineSchedule() {
                   <span className="hint">{v.note}</span>
                 </span>
               </label>
-              <span className="status">
-                {isDone ? "Done" : status === "due" ? "Due now" : status === "overdue" ? "Overdue" : "Coming up"}
-              </span>
+              {isDone ? (
+                <span className="badge badge-done">
+                  <Check size={13} aria-hidden="true" />
+                  Done
+                </span>
+              ) : (
+                <span className={STATUS_BADGE[status]}>
+                  {status === "due"
+                    ? "Due now"
+                    : status === "overdue"
+                      ? "Overdue"
+                      : "Coming up"}
+                </span>
+              )}
             </div>
           );
         })}
       </div>
 
-      <p className="hint">
+      <p className="hint mt-4">
         This is a common schedule for small farms in Nigeria. Your vet may
         change the timing for your area or your birds, so follow your vet’s
         advice where it differs.
       </p>
-    </div>
+    </section>
   );
 }

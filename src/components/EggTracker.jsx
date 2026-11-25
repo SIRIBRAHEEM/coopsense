@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Egg, Plus, Trash2, TrendingUp } from "lucide-react";
 import { forecastNext7, averageLast7 } from "../lib/forecast";
 
 const STORE_KEY = "coopsense-eggs-v1";
@@ -57,17 +58,26 @@ export default function EggTracker() {
   }
 
   return (
-    <div className="card">
-      <h2>Egg tracker</h2>
-      <p className="hint">
-        Log how many eggs you collect each day. CoopSense shows your recent
-        laying and a rough forecast for the next 7 days, based on your own
-        records. Your records stay in this browser.
-      </p>
+    <section className="card">
+      <div className="card-head">
+        <div className="card-icon green" aria-hidden="true">
+          <Egg size={24} strokeWidth={2.2} />
+        </div>
+        <div>
+          <h2>Egg tracker</h2>
+          <p className="hint">
+            Log how many eggs you collect each day. CoopSense shows your
+            recent laying and a rough forecast for the next 7 days, based on
+            your own records. Your records stay in this browser.
+          </p>
+        </div>
+      </div>
 
       <div className="field">
-        <label>Number of laying birds in the flock</label>
+        <label htmlFor="flock">Number of laying birds in the flock</label>
         <input
+          id="flock"
+          className="input"
           type="number"
           min="1"
           value={flock}
@@ -75,18 +85,22 @@ export default function EggTracker() {
         />
       </div>
 
-      <div className="row">
+      <div className="row mt-4">
         <div className="field">
-          <label>Date</label>
+          <label htmlFor="egg-date">Date</label>
           <input
+            id="egg-date"
+            className="input"
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
         </div>
         <div className="field">
-          <label>Eggs collected</label>
+          <label htmlFor="egg-count">Eggs collected</label>
           <input
+            id="egg-count"
+            className="input"
             type="number"
             min="0"
             value={eggs}
@@ -94,23 +108,24 @@ export default function EggTracker() {
             placeholder="e.g. 82"
           />
         </div>
-        <button className="btn" type="button" onClick={addEntry}>
+        <button className="btn btn-green" type="button" onClick={addEntry}>
+          <Plus size={19} aria-hidden="true" />
           Add
         </button>
       </div>
 
       {entries.length > 0 && (
         <>
-          <div className="results">
-            <div className="result">
+          <div className="stats">
+            <div className="stat">
               <span>Average, last 7 days</span>
               <strong>{avg7.toFixed(1)} eggs/day</strong>
             </div>
-            <div className="result">
+            <div className="stat clay">
               <span>Laying rate</span>
               <strong>{layingRate.toFixed(0)}%</strong>
             </div>
-            <div className="result">
+            <div className="stat">
               <span>Days logged</span>
               <strong>{entries.length}</strong>
             </div>
@@ -120,13 +135,13 @@ export default function EggTracker() {
           <div className="chart">
             {recent.map((e) => (
               <div key={e.date} className="bar-wrap">
+                <span className="bar-value">{e.eggs}</span>
                 <div
                   className="bar"
                   style={{ height: `${Math.max(4, (e.eggs / maxEggs) * 100)}px` }}
                   title={`${e.date}: ${e.eggs} eggs`}
                 />
                 <span className="bar-label">{e.date.slice(5)}</span>
-                <span className="bar-value">{e.eggs}</span>
               </div>
             ))}
           </div>
@@ -150,6 +165,7 @@ export default function EggTracker() {
                       type="button"
                       onClick={() => removeEntry(e.date)}
                     >
+                      <Trash2 size={14} aria-hidden="true" />
                       Remove
                     </button>
                   </td>
@@ -160,11 +176,14 @@ export default function EggTracker() {
 
           {forecast ? (
             <div className="result-box">
-              <h3>Forecast for the next 7 days</h3>
+              <h3 className="flex items-center gap-2">
+                <TrendingUp size={19} aria-hidden="true" />
+                Forecast for the next 7 days
+              </h3>
               <p>
                 Based on the trend in your records. A fall in laying can mean
-                stress, sickness or a feed problem, so check the flock if the
-                numbers drop.
+                stress, sickness or a feed problem, so check the flock if
+                the numbers drop.
               </p>
               <ul>
                 {forecast.map((f, i) => (
@@ -175,7 +194,7 @@ export default function EggTracker() {
               </ul>
             </div>
           ) : (
-            <p className="hint">
+            <p className="hint mt-4">
               Log at least 3 days of eggs to see a forecast.
             </p>
           )}
@@ -183,10 +202,10 @@ export default function EggTracker() {
       )}
 
       {entries.length === 0 && (
-        <p className="hint">
+        <p className="hint mt-4">
           No records yet. Add today’s egg count to get started.
         </p>
       )}
-    </div>
+    </section>
   );
 }

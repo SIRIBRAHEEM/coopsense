@@ -9,10 +9,11 @@ of the same walkthrough, so you can see the order before you record.
 
 Show the home screen.
 
-Say: "I am Ibrahim, a student from Nigeria. My family runs a poultry
-farm, and I built CoopSense for small farmers like us. Feed is our
-biggest cost, one sick bird can spread disease through the whole
-flock, and a missed vaccine can wipe out weeks of work."
+Say: "Hello, I am Ibrahim Yahaya from Bida, Niger State, Nigeria, a
+student at the Federal University of Technology Minna. My family runs
+a poultry farm, and I built CoopSense for small farmers like us. Feed
+is our biggest cost, one sick bird can spread disease through the
+whole flock, and a missed vaccine can wipe out weeks of work."
 
 ## 0:20 - 0:55 | Feed cost calculator
 
